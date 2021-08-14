@@ -22,6 +22,9 @@ class ProcessService implements CalculateInterface
     }
 
     /**
+     * Process Service calculate method process the logic.
+     * This class sends converted parameters to CalculateHelper Class.
+     *
      * @param array $requestData
      * @return float
      */
@@ -36,6 +39,11 @@ class ProcessService implements CalculateInterface
         $convertedParam1 = $this->convertParameter($param1, $param1Type, $returnType);
         $convertedParam2 = $this->convertParameter($param2, $param2Type, $returnType);
 
+        /**
+         * If another mathematic logic will be added in the future like minus, mod etc,
+         * it can be used like setOperation(new Mod()) without changing other parameters and classes.
+         *
+         */
         $result = $this->calculateHelper
             ->setParameters(array($convertedParam1, $convertedParam2))
             ->setOperation(new Add())
@@ -52,9 +60,20 @@ class ProcessService implements CalculateInterface
      */
     public function convertParameter(int $param, string $paramType, string $returnType): float
     {
+        /**
+         * if the first parameter equals returnType , it can be returned its owned value or
+         * if the second parameter equals returnType , it can be returned itself.
+         */
         if($paramType == $returnType){
             return $param;
         }
+
+        /**
+         * ManageService implements ConvertInterface and gets it as constructor
+         *
+         * if any other returnType like centimeter want to be added ,
+         * it will just be enough to create a new Class like CentimeterConvertService.
+         */
 
         switch ($returnType){
             case self::METERS:

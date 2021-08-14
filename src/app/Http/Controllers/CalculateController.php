@@ -6,6 +6,10 @@ use App\Service\ProcessService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Class CalculateController
+ * @package App\Http\Controllers
+ */
 class CalculateController extends Controller
 {
     /**
@@ -19,6 +23,9 @@ class CalculateController extends Controller
     }
 
     /**
+     * calculate method gets the request parameters and validates them.
+     * it sends the request parameters to ProcessService class and gets the calculated value.
+     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
