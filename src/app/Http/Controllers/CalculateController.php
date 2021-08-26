@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\ProcessService;
+use App\Service\CalculateAdditionFactory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -13,19 +13,6 @@ use Illuminate\Http\Request;
 class CalculateController extends Controller
 {
     /**
-     * @var ProcessService
-     */
-    private $processService;
-
-    public function __construct(ProcessService $processService)
-    {
-        $this->processService = $processService;
-    }
-
-    /**
-     * calculate method gets the request parameters and validates them.
-     * it sends the request parameters to ProcessService class and gets the calculated value.
-     *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -34,7 +21,9 @@ class CalculateController extends Controller
         $this->validateParameters($request);
 
         try {
-            $result = $this->processService->calculate($request->all());
+            $calculateAdditionFactory = new CalculateAdditionFactory();
+            $calculate = $calculateAdditionFactory->createCalculate();
+            $result = $calculate->calculate($request->all());
 
             return response()->json([
                 'status' => '200',
